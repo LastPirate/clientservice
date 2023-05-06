@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+  backend:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+  storage:
+    image: "postgres:15.2-alpine"
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: clientservice
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mysecretpassword
