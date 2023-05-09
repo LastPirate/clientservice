@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface ClientCrudService {
   UUID create(CreateClientCommand command);
-  Client find(UUID id);
-  Client find(FindClientCommand command);
+  Client findById(UUID id);
+  Client findByFields(FindClientCommand command);
 }

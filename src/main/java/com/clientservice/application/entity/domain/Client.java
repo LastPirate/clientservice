@@ -18,7 +18,7 @@ public class Client {
   public final String phoneNumber;
   public final String email;
 
-  public final CreationSource creationSource;
+  public final CreationSource source;
 
   public Client(
       UUID id,
@@ -27,7 +27,7 @@ public class Client {
       List<Address> addresses,
       String phoneNumber,
       String email,
-      CreationSource creationSource
+      CreationSource source
   ) {
     this.id = id;
     this.bankId = bankId;
@@ -35,7 +35,7 @@ public class Client {
     this.addresses = addresses;
     this.phoneNumber = phoneNumber;
     this.email = email;
-    this.creationSource = creationSource;
+    this.source = source;
 
     validate();
   }
@@ -89,7 +89,7 @@ public class Client {
     if (ValidationExtension.isEmptyOrBlank(phoneNumber)) throw new IllegalArgumentException("Phone number is mandatory");
     if (ValidationExtension.isPhoneNumberValid(phoneNumber)) throw new IllegalArgumentException("Phone number isn't in valid format");
     if (ValidationExtension.isEmptyOrBlank(email)) throw new IllegalArgumentException("Email is mandatory");
-    if (creationSource == null) throw new IllegalArgumentException("Creation source is mandatory");
+    if (source == null) throw new IllegalArgumentException("Creation source is mandatory");
   }
 
   private void validateAddresses(List<Address> addresses) {

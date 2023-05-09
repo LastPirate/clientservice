@@ -7,8 +7,9 @@ import java.util.UUID;
 
 public class Passport {
   public final UUID id;
+  public final UUID clientId;
 
-  public final String passportNumber;
+  public final String number;
 
   public final String firstName;
   public final String middleName;
@@ -21,7 +22,8 @@ public class Passport {
 
   public Passport(
       UUID id,
-      String passportNumber,
+      UUID clientId,
+      String number,
       String firstName,
       String middleName,
       String familyName,
@@ -30,7 +32,8 @@ public class Passport {
       Boolean isDeprecated
   ) {
     this.id = id;
-    this.passportNumber = passportNumber;
+    this.clientId = clientId;
+    this.number = number;
     this.firstName = firstName;
     this.middleName = middleName;
     this.familyName = familyName;
@@ -43,17 +46,18 @@ public class Passport {
 
   private void validate() {
     if (id == null) throw new IllegalArgumentException("Identifier is mandatory");
+    if (clientId == null) throw new IllegalArgumentException("Client's identifier is mandatory");
 
     //there is an option that client doesn't have middle name
     if (
-        ValidationExtension.isEmptyOrBlank(passportNumber) ||
+        ValidationExtension.isEmptyOrBlank(number) ||
             ValidationExtension.isEmptyOrBlank(firstName) ||
             ValidationExtension.isEmptyOrBlank(familyName) ||
             birthDate == null ||
             ValidationExtension.isEmptyOrBlank(birthCity)
     ) throw new IllegalArgumentException("Passport data must be defined fully");
 
-    if (ValidationExtension.isPassportNumberValid(passportNumber)) {
+    if (ValidationExtension.isPassportNumberValid(number)) {
       throw new IllegalArgumentException("Passport number has not valid format");
     }
   }

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public class Address {
   public final UUID id;
+  public final UUID clientId;
 
   public final String country;
   public final String city;
@@ -18,6 +19,7 @@ public class Address {
 
   public Address(
       UUID id,
+      UUID clientId,
       String country,
       String city,
       String street,
@@ -27,6 +29,7 @@ public class Address {
       Boolean isDeprecated
   ) {
     this.id = id;
+    this.clientId = clientId;
     this.country = country;
     this.city = city;
     this.street = street;
@@ -40,6 +43,7 @@ public class Address {
 
   private void validate() {
     if (id == null) throw new IllegalArgumentException("Identifier is mandatory");
+    if (clientId == null) throw new IllegalArgumentException("Client's identifier is mandatory");
     if (type == null) throw new IllegalArgumentException("Address type is mandatory");
 
     if (
