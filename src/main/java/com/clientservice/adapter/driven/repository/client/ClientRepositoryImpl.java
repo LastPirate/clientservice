@@ -4,9 +4,12 @@ import com.clientservice.application.entity.command.FindClientCommand;
 import com.clientservice.application.entity.domain.Client;
 import com.clientservice.application.entity.exception.NotFoundException;
 import com.clientservice.application.port.ClientRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ClientRepositoryImpl implements ClientRepository {
 
@@ -34,11 +37,11 @@ public class ClientRepositoryImpl implements ClientRepository {
   }
 
   @Override
-  public Client findByFields(FindClientCommand command) {
-    ClientJpaEntity entity = jpaRepository.findById().orElseThrow(() ->
-        new NotFoundException("client with such field values doesn't exist")
-    );
+  public List<Client> findAllByFields(FindClientCommand command) {
+    Specification<ClientJpaEntity> specification = new ClientJpaSpecification(command);
+    List<ClientJpaEntity> entities = jpaRepository.findAll(specification);
 
-    return ClientJpaMapper.mapToDomain(entity);
+    return entities.stream()
+        .map(ClientJpaMapper::mapToDomain).collect(Collectors.toList());
   }
 }

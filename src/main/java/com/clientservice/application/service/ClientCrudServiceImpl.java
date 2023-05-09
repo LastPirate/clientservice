@@ -5,6 +5,7 @@ import com.clientservice.application.entity.command.FindClientCommand;
 import com.clientservice.application.entity.domain.Client;
 import com.clientservice.application.port.ClientRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ClientCrudServiceImpl implements ClientCrudService {
@@ -28,7 +29,7 @@ public class ClientCrudServiceImpl implements ClientCrudService {
   }
 
   @Override
-  public Client findByFields(FindClientCommand command) {
-    return repository.findByFields(command);
+  public List<Client> findAllByFields(FindClientCommand command) {
+    return repository.findAllByFields(command);
   }
 }

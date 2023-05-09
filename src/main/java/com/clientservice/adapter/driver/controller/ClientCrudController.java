@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,13 +32,13 @@ public class ClientCrudController {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping("/find/{id}")
-  public Client find(@PathVariable("id") UUID id) {
+  public Client findById(@PathVariable("id") UUID id) {
     return service.findById(id);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping("/find")
-  public Client find(@RequestBody FindClientCommand command) {
-    return service.findByFields(command);
+  public List<Client> findAllByFields(@RequestBody FindClientCommand command) {
+    return service.findAllByFields(command);
   }
 }
