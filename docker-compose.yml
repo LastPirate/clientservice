@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
   storage:
-    image: "postgres:15.2-alpine"
+    image: "postgres:14-alpine"
     restart: always
     ports:
       - "5432:5432"
