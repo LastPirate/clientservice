@@ -17,7 +17,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "client")
+@Table(
+    name = "client",
+    schema = "client_service"
+)
 public class ClientJpaEntity {
 
   @Id
@@ -28,7 +31,7 @@ public class ClientJpaEntity {
   public UUID bankId;
 
   @OneToMany(
-      mappedBy = "client_id",
+      mappedBy = "clientId",
       fetch = FetchType.LAZY,
       cascade = CascadeType.ALL,
       orphanRemoval = true
@@ -36,7 +39,7 @@ public class ClientJpaEntity {
   public List<PassportJpaEntity> passports;
 
   @OneToMany(
-      mappedBy = "client_id",
+      mappedBy = "clientId",
       fetch = FetchType.LAZY,
       cascade = CascadeType.ALL,
       orphanRemoval = true

@@ -11,7 +11,10 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "address")
+@Table(
+    name = "address",
+    schema = "client_service"
+)
 public class AddressJpaEntity {
 
   @Id

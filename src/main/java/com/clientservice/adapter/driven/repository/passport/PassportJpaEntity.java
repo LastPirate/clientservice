@@ -8,7 +8,10 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "passport")
+@Table(
+    name = "passport",
+    schema = "client_service"
+)
 public class PassportJpaEntity {
 
   @Id

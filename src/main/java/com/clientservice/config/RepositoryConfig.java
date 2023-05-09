@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @ComponentScan("com.clientservice.adapter.driven.repository")
-@EnableJpaRepositories
+@EnableJpaRepositories("com.clientservice.adapter.driven.repository")
 public class RepositoryConfig {
 
   @Bean
