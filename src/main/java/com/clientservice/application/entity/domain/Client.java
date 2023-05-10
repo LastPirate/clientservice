@@ -48,11 +48,11 @@ public class Client {
         command.addresses,
         command.phoneNumber,
         command.email,
-        command.creationSource
+        command.source
     );
   }
 
-  public Passport getActual() {
+  public Passport getActualPassport() {
     return passports.stream()
         .filter(p -> !p.isDeprecated)
         .findFirst()
@@ -61,7 +61,7 @@ public class Client {
         );
   }
 
-  public Address getRegistrationAddress() {
+  public Address getActualRegistrationAddress() {
     return addresses.stream()
         .filter(a -> !a.isDeprecated && a.type == AddressType.REGISTRATION)
         .findFirst()
@@ -70,7 +70,7 @@ public class Client {
         );
   }
 
-  public Address getLivingAddress() {
+  public Address getActualLivingAddress() {
     return addresses.stream()
         .filter(a -> !a.isDeprecated && a.type == AddressType.LIVING)
         .findFirst()
