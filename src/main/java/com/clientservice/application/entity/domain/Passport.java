@@ -46,7 +46,7 @@ public class Passport {
     if (id == null) throw new IllegalArgumentException("Identifier is mandatory");
     if (clientId == null) throw new IllegalArgumentException("Client's identifier is mandatory");
 
-    if ((source == CreationSource.EMAIL || source == CreationSource.BANK || source == CreationSource.GOSUSLUGI) &&
+    if ((source == CreationSource.MAIL || source == CreationSource.BANK || source == CreationSource.GOSUSLUGI) &&
         ValidationExtension.isEmptyOrBlank(firstName)) {
       throw new IllegalArgumentException("First name is mandatory");
     }

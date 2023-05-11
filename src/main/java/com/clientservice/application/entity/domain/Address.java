@@ -24,7 +24,7 @@ public class Address {
       String city,
       String street,
       String building,
-      Integer apartment,
+      int apartment,
       AddressType type,
       boolean isDeprecated
   ) {

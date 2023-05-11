@@ -3,7 +3,6 @@ package com.clientservice.adapter.driver.controller;
 import com.clientservice.adapter.driver.controller.model.ClientModelMapper;
 import com.clientservice.adapter.driver.controller.model.ClientResponse;
 import com.clientservice.adapter.driver.controller.model.CreateClientRequest;
-import com.clientservice.application.entity.command.CreateClientCommand;
 import com.clientservice.application.entity.command.FindClientCommand;
 import com.clientservice.application.entity.domain.Client;
 import com.clientservice.application.entity.domain.CreationSource;
@@ -35,9 +34,9 @@ public class ClientCrudController {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/create")
   public UUID create(@RequestHeader(SOURCE_HEADER) CreationSource source, @RequestBody CreateClientRequest request) {
-    CreateClientCommand command = ClientModelMapper.mapToCommand(source, request);
+    Client client = ClientModelMapper.mapToClient(source, request);
 
-    return service.create(command);
+    return service.create(client);
   }
 
   @ResponseStatus(HttpStatus.OK)

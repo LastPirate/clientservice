@@ -1,7 +1,7 @@
 package com.clientservice.application.entity.domain;
 
 public enum CreationSource {
-  EMAIL,
+  MAIL,
   MOBILE,
   BANK,
   GOSUSLUGI
