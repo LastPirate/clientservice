@@ -9,7 +9,13 @@ public class FindClientCommand {
   public final String phoneNumber;
   public final String email;
 
-  public FindClientCommand(String firstName, String middleName, String familyName, String phoneNumber, String email) {
+  public FindClientCommand(
+      String firstName,
+      String middleName,
+      String familyName,
+      String phoneNumber,
+      String email
+  ) {
     this.firstName = firstName;
     this.middleName = middleName;
     this.familyName = familyName;

@@ -50,19 +50,13 @@ public class Client {
   public Address getActualRegistrationAddress() {
     return addresses.stream()
         .filter(a -> !a.isDeprecated && a.type == AddressType.REGISTRATION)
-        .findFirst()
-        .orElseThrow(() ->
-            new IllegalStateException("Actual registration address not found for client id =" + id.toString())
-        );
+        .findFirst().orElse(null);
   }
 
   public Address getActualLivingAddress() {
     return addresses.stream()
         .filter(a -> !a.isDeprecated && a.type == AddressType.LIVING)
-        .findFirst()
-        .orElseThrow(() ->
-            new IllegalStateException("Actual living address not found for client id =" + id.toString())
-        );
+        .findFirst().orElse(null);
   }
 
   private void validate() {
