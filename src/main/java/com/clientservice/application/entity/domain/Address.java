@@ -26,7 +26,7 @@ public class Address {
       String building,
       Integer apartment,
       AddressType type,
-      Boolean isDeprecated
+      boolean isDeprecated
   ) {
     this.id = id;
     this.clientId = clientId;
@@ -37,11 +37,9 @@ public class Address {
     this.apartment = apartment;
     this.type = type;
     this.isDeprecated = isDeprecated;
-
-    validate();
   }
 
-  private void validate() {
+  void validate() {
     if (id == null) throw new IllegalArgumentException("Identifier is mandatory");
     if (clientId == null) throw new IllegalArgumentException("Client's identifier is mandatory");
     if (type == null) throw new IllegalArgumentException("Address type is mandatory");

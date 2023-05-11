@@ -1,36 +1,37 @@
-package com.clientservice.application.entity.command;
+package com.clientservice.adapter.driver.controller.model;
 
 import com.clientservice.application.entity.domain.Address;
-import com.clientservice.application.entity.domain.CreationSource;
 import com.clientservice.application.entity.domain.Passport;
 
-import java.util.List;
 import java.util.UUID;
 
-public class CreateClientCommand {
+public class ClientResponse {
+  public final UUID id;
   public final UUID bankId;
 
   public final Passport passport;
-  public final List<Address> addresses;
 
   public final String phoneNumber;
   public final String email;
 
-  public final CreationSource source;
+  public final Address registrationAddress;
+  public final Address livingAddress;
 
-  public CreateClientCommand(
+  public ClientResponse(
+      UUID id,
       UUID bankId,
       Passport passport,
-      List<Address> addresses,
       String phoneNumber,
       String email,
-      CreationSource source
+      Address registrationAddress,
+      Address livingAddress
   ) {
+    this.id = id;
     this.bankId = bankId;
     this.passport = passport;
-    this.addresses = addresses;
     this.phoneNumber = phoneNumber;
     this.email = email;
-    this.source = source;
+    this.registrationAddress = registrationAddress;
+    this.livingAddress = livingAddress;
   }
 }

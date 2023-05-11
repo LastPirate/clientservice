@@ -1,13 +1,12 @@
-package com.clientservice.application.entity.command;
+package com.clientservice.adapter.driver.controller.model;
 
 import com.clientservice.application.entity.domain.Address;
-import com.clientservice.application.entity.domain.CreationSource;
 import com.clientservice.application.entity.domain.Passport;
 
 import java.util.List;
 import java.util.UUID;
 
-public class CreateClientCommand {
+public class CreateClientRequest {
   public final UUID bankId;
 
   public final Passport passport;
@@ -16,21 +15,17 @@ public class CreateClientCommand {
   public final String phoneNumber;
   public final String email;
 
-  public final CreationSource source;
-
-  public CreateClientCommand(
+  public CreateClientRequest(
       UUID bankId,
       Passport passport,
       List<Address> addresses,
       String phoneNumber,
-      String email,
-      CreationSource source
+      String email
   ) {
     this.bankId = bankId;
     this.passport = passport;
     this.addresses = addresses;
     this.phoneNumber = phoneNumber;
     this.email = email;
-    this.source = source;
   }
 }

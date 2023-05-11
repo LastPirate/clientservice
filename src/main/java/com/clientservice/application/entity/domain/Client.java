@@ -48,11 +48,11 @@ public class Client {
         command.addresses,
         command.phoneNumber,
         command.email,
-        command.creationSource
+        command.source
     );
   }
 
-  public Passport getActual() {
+  public Passport getActualPassport() {
     return passports.stream()
         .filter(p -> !p.isDeprecated)
         .findFirst()
@@ -61,7 +61,7 @@ public class Client {
         );
   }
 
-  public Address getRegistrationAddress() {
+  public Address getActualRegistrationAddress() {
     return addresses.stream()
         .filter(a -> !a.isDeprecated && a.type == AddressType.REGISTRATION)
         .findFirst()
@@ -70,7 +70,7 @@ public class Client {
         );
   }
 
-  public Address getLivingAddress() {
+  public Address getActualLivingAddress() {
     return addresses.stream()
         .filter(a -> !a.isDeprecated && a.type == AddressType.LIVING)
         .findFirst()
@@ -81,18 +81,33 @@ public class Client {
 
   private void validate() {
     if (id == null) throw new IllegalArgumentException("Identifier is mandatory");
-    if (bankId == null) throw new IllegalArgumentException("Bank identifier is mandatory");
-
-    validatePassports(passports);
-    validateAddresses(addresses);
-
-    if (ValidationExtension.isEmptyOrBlank(phoneNumber)) throw new IllegalArgumentException("Phone number is mandatory");
-    if (ValidationExtension.isPhoneNumberValid(phoneNumber)) throw new IllegalArgumentException("Phone number isn't in valid format");
-    if (ValidationExtension.isEmptyOrBlank(email)) throw new IllegalArgumentException("Email is mandatory");
     if (source == null) throw new IllegalArgumentException("Creation source is mandatory");
+
+    if (source == CreationSource.MOBILE || source == CreationSource.GOSUSLUGI) {
+      if (ValidationExtension.isEmptyOrBlank(phoneNumber)) throw new IllegalArgumentException("Phone number is mandatory");
+      if (ValidationExtension.isPhoneNumberValid(phoneNumber)) throw new IllegalArgumentException("Phone number isn't in valid format");
+    }
+
+    validateActualPassport(passports);
+    getActualPassport().validate(source);
+
+    if ((source == CreationSource.EMAIL || source == CreationSource.GOSUSLUGI) &&
+        ValidationExtension.isEmptyOrBlank(email)) {
+      throw new IllegalArgumentException("Email is mandatory");
+    }
+
+    if ((source == CreationSource.BANK || source == CreationSource.GOSUSLUGI) &&
+        bankId == null) {
+      throw new IllegalArgumentException("Bank identifier is mandatory");
+    }
+
+    if (source == CreationSource.GOSUSLUGI) {
+      validateActualAddresses(addresses);
+      getActualLivingAddress().validate();
+    }
   }
 
-  private void validateAddresses(List<Address> addresses) {
+  private void validateActualAddresses(List<Address> addresses) {
     if (addresses == null) throw new IllegalArgumentException("Address data is mandatory");
 
     if (addresses.size() == 1) {
@@ -115,7 +130,7 @@ public class Client {
     }
   }
 
-  private void validatePassports(List<Passport> passports) {
+  private void validateActualPassport(List<Passport> passports) {
     if (passports == null) throw new IllegalArgumentException("Passport data is mandatory");
 
     List<Passport> actual = passports.stream().filter(p -> !p.isDeprecated).collect(Collectors.toList());

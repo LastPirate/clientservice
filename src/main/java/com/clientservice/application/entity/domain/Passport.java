@@ -29,7 +29,7 @@ public class Passport {
       String familyName,
       LocalDate birthDate,
       String birthCity,
-      Boolean isDeprecated
+      boolean isDeprecated
   ) {
     this.id = id;
     this.clientId = clientId;
@@ -40,25 +40,29 @@ public class Passport {
     this.birthDate = birthDate;
     this.birthCity = birthCity;
     this.isDeprecated = isDeprecated;
-
-    validate();
   }
 
-  private void validate() {
+  void validate(CreationSource source) {
     if (id == null) throw new IllegalArgumentException("Identifier is mandatory");
     if (clientId == null) throw new IllegalArgumentException("Client's identifier is mandatory");
 
-    //there is an option that client doesn't have middle name
-    if (
-        ValidationExtension.isEmptyOrBlank(number) ||
-            ValidationExtension.isEmptyOrBlank(firstName) ||
-            ValidationExtension.isEmptyOrBlank(familyName) ||
-            birthDate == null ||
-            ValidationExtension.isEmptyOrBlank(birthCity)
-    ) throw new IllegalArgumentException("Passport data must be defined fully");
+    if ((source == CreationSource.EMAIL || source == CreationSource.BANK || source == CreationSource.GOSUSLUGI) &&
+        ValidationExtension.isEmptyOrBlank(firstName)) {
+      throw new IllegalArgumentException("First name is mandatory");
+    }
 
-    if (ValidationExtension.isPassportNumberValid(number)) {
-      throw new IllegalArgumentException("Passport number has not valid format");
+    if (source == CreationSource.BANK || source == CreationSource.GOSUSLUGI) {
+      if (ValidationExtension.isEmptyOrBlank(middleName)) throw new IllegalArgumentException("Middle name is mandatory");
+      if (ValidationExtension.isEmptyOrBlank(familyName)) throw new IllegalArgumentException("Family name is mandatory");
+
+      if (ValidationExtension.isEmptyOrBlank(number)) throw new IllegalArgumentException("Passport number is mandatory");
+      if (ValidationExtension.isPassportNumberValid(number)) throw new IllegalArgumentException("Passport number has not valid format");
+
+      if (birthDate == null) throw new IllegalArgumentException("Birth date is mandatory");
+    }
+
+    if (source == CreationSource.GOSUSLUGI && ValidationExtension.isEmptyOrBlank(birthCity)) {
+      throw new IllegalArgumentException("Birth city is mandatory");
     }
   }
 }
