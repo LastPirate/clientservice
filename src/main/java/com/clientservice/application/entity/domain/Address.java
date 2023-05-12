@@ -12,7 +12,7 @@ public class Address {
   public final String city;
   public final String street;
   public final String building;
-  public final int apartment;
+  public final Integer apartment;
 
   public final AddressType type;
   public final boolean isDeprecated;

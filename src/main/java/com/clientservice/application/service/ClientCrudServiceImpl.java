@@ -1,6 +1,5 @@
 package com.clientservice.application.service;
 
-import com.clientservice.application.entity.command.CreateClientCommand;
 import com.clientservice.application.entity.command.FindClientCommand;
 import com.clientservice.application.entity.domain.Client;
 import com.clientservice.application.port.ClientRepository;
@@ -17,10 +16,8 @@ public class ClientCrudServiceImpl implements ClientCrudService {
   }
 
   @Override
-  public UUID create(CreateClientCommand command) {
-    Client newClient = new Client(command);
-
-    return repository.save(newClient);
+  public UUID create(Client client) {
+    return repository.save(client);
   }
 
   @Override

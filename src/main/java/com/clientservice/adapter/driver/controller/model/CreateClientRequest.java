@@ -1,30 +1,33 @@
 package com.clientservice.adapter.driver.controller.model;
 
-import com.clientservice.application.entity.domain.Address;
-import com.clientservice.application.entity.domain.Passport;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
 import java.util.UUID;
 
 public class CreateClientRequest {
   public final UUID bankId;
 
-  public final Passport passport;
-  public final List<Address> addresses;
+  public final PassportData passport;
+  public final AddressData registrationAddress;
+  public final AddressData livingAddress;
 
   public final String phoneNumber;
   public final String email;
 
+  @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
   public CreateClientRequest(
-      UUID bankId,
-      Passport passport,
-      List<Address> addresses,
-      String phoneNumber,
-      String email
+      @JsonProperty("bankId") UUID bankId,
+      @JsonProperty("passport") PassportData passport,
+      @JsonProperty("registrationAddress") AddressData registrationAddress,
+      @JsonProperty("livingAddress") AddressData livingAddress,
+      @JsonProperty("phoneNumber") String phoneNumber,
+      @JsonProperty("email") String email
   ) {
     this.bankId = bankId;
     this.passport = passport;
-    this.addresses = addresses;
+    this.registrationAddress = registrationAddress;
+    this.livingAddress = livingAddress;
     this.phoneNumber = phoneNumber;
     this.email = email;
   }

@@ -1,9 +1,7 @@
 package com.clientservice.application.entity.domain;
 
 import com.clientservice.application.ValidationExtension;
-import com.clientservice.application.entity.command.CreateClientCommand;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,18 +38,6 @@ public class Client {
     validate();
   }
 
-  public Client(CreateClientCommand command) {
-    this(
-        UUID.randomUUID(),
-        command.bankId,
-        Collections.singletonList(command.passport),
-        command.addresses,
-        command.phoneNumber,
-        command.email,
-        command.source
-    );
-  }
-
   public Passport getActualPassport() {
     return passports.stream()
         .filter(p -> !p.isDeprecated)
@@ -64,19 +50,13 @@ public class Client {
   public Address getActualRegistrationAddress() {
     return addresses.stream()
         .filter(a -> !a.isDeprecated && a.type == AddressType.REGISTRATION)
-        .findFirst()
-        .orElseThrow(() ->
-            new IllegalStateException("Actual registration address not found for client id =" + id.toString())
-        );
+        .findFirst().orElse(null);
   }
 
   public Address getActualLivingAddress() {
     return addresses.stream()
         .filter(a -> !a.isDeprecated && a.type == AddressType.LIVING)
-        .findFirst()
-        .orElseThrow(() ->
-            new IllegalStateException("Actual living address not found for client id =" + id.toString())
-        );
+        .findFirst().orElse(null);
   }
 
   private void validate() {
@@ -91,7 +71,7 @@ public class Client {
     validateActualPassport(passports);
     getActualPassport().validate(source);
 
-    if ((source == CreationSource.EMAIL || source == CreationSource.GOSUSLUGI) &&
+    if ((source == CreationSource.MAIL || source == CreationSource.GOSUSLUGI) &&
         ValidationExtension.isEmptyOrBlank(email)) {
       throw new IllegalArgumentException("Email is mandatory");
     }

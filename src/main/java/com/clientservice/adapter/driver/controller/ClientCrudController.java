@@ -3,7 +3,7 @@ package com.clientservice.adapter.driver.controller;
 import com.clientservice.adapter.driver.controller.model.ClientModelMapper;
 import com.clientservice.adapter.driver.controller.model.ClientResponse;
 import com.clientservice.adapter.driver.controller.model.CreateClientRequest;
-import com.clientservice.application.entity.command.CreateClientCommand;
+import com.clientservice.adapter.driver.controller.model.FindClientRequest;
 import com.clientservice.application.entity.command.FindClientCommand;
 import com.clientservice.application.entity.domain.Client;
 import com.clientservice.application.entity.domain.CreationSource;
@@ -35,9 +35,9 @@ public class ClientCrudController {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/create")
   public UUID create(@RequestHeader(SOURCE_HEADER) CreationSource source, @RequestBody CreateClientRequest request) {
-    CreateClientCommand command = ClientModelMapper.mapToCommand(source, request);
+    Client client = ClientModelMapper.mapToClient(source, request);
 
-    return service.create(command);
+    return service.create(client);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -50,7 +50,9 @@ public class ClientCrudController {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping("/find")
-  public List<ClientResponse> findAllByFields(@RequestBody FindClientCommand command) {
+  public List<ClientResponse> findAllByFields(@RequestBody FindClientRequest request) {
+    FindClientCommand command = ClientModelMapper.mapToCommand(request);
+
     return service.findAllByFields(command).stream()
         .map(ClientModelMapper::mapToResponse).collect(Collectors.toList());
   }

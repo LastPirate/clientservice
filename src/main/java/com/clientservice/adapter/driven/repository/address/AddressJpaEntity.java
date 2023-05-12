@@ -37,7 +37,7 @@ public class AddressJpaEntity {
   public String building;
 
   @Column(name = "apartment")
-  public int apartment;
+  public Integer apartment;
 
   @Column(name = "type")
   @Enumerated(EnumType.STRING)
@@ -56,7 +56,7 @@ public class AddressJpaEntity {
       String city,
       String street,
       String building,
-      int apartment,
+      Integer apartment,
       AddressType type,
       boolean isDeprecated
   ) {

@@ -1,7 +1,7 @@
 package com.clientservice.config;
 
-import com.clientservice.adapter.driven.repository.client.ClientRepositoryImpl;
 import com.clientservice.adapter.driven.repository.client.ClientJpaRepository;
+import com.clientservice.adapter.driven.repository.client.ClientRepositoryImpl;
 import com.clientservice.application.port.ClientRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
