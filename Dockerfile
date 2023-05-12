@@ -1,6 +1,11 @@
-FROM amazoncorretto:8-alpine3.14-jre
+FROM maven:3.9.1-eclipse-temurin-8-alpine
 
-COPY /target/clientservice-1.0-SNAPSHOT.jar app.jar
+WORKDIR /project
+COPY . .
+RUN mvn clean package -DskipTests
+RUN cp target/clientservice-1.0-SNAPSHOT.jar /opt/app.jar
+
+WORKDIR /opt
+RUN rm -rf /project
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
