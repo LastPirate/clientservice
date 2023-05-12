@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS client_service.client(
     source varchar not null
 );
 
-CREATE TABLE IF NOT EXISTS client_service.passports(
+CREATE TABLE IF NOT EXISTS client_service.passport(
     id uuid primary key,
     client_id uuid not null references client_service.client(id),
     number varchar unique,
