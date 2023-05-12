@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @Testcontainers
 @ActiveProfiles("repository-test")
-public class ClientRepositoryTest {
+public class ClientRepositoryTests {
 
   @Autowired
   private ClientRepository clientRepository;

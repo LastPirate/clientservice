@@ -22,7 +22,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class ClientCrudServiceTest {
+public class ClientCrudServiceTests {
 
   @InjectMocks
   private ClientCrudServiceImpl clientCrudService;
